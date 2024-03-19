@@ -42,6 +42,7 @@
 		048D58142BA99F1200762370 /* GoogleAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAuthService.swift; sourceTree = "<group>"; };
 		048D58162BA99F5100762370 /* FirebaseAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthRepository.swift; sourceTree = "<group>"; };
 		048D58182BA99F7900762370 /* AppleAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthService.swift; sourceTree = "<group>"; };
+		048D581B2BA9A29400762370 /* Syrup.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Syrup.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +78,7 @@
 		048D57E42BA983EA00762370 /* Syrup */ = {
 			isa = PBXGroup;
 			children = (
+				048D581B2BA9A29400762370 /* Syrup.entitlements */,
 				048D581A2BA9A02E00762370 /* Auth */,
 				048D58082BA99A4800762370 /* GoogleService-Info.plist */,
 				048D58022BA9992F00762370 /* App */,
@@ -377,6 +379,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Syrup/Syrup.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 39KXYRGWHY;
@@ -404,6 +407,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Syrup/Syrup.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 39KXYRGWHY;
