@@ -108,6 +108,10 @@
 				Base,
 			);
 			mainGroup = 048D57D92BA983EA00762370;
+			packageReferences = (
+				048D57FB2BA996DA00762370 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				048D57FC2BA9971700762370 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+			);
 			productRefGroup = 048D57E32BA983EA00762370 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -344,6 +348,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		048D57FB2BA996DA00762370 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
+		048D57FC2BA9971700762370 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 048D57DA2BA983EA00762370 /* Project object */;
 }
