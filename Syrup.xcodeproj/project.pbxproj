@@ -19,6 +19,10 @@
 		048D580D2BA99AB900762370 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D580C2BA99AB900762370 /* UserModel.swift */; };
 		048D580F2BA99B2F00762370 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D580E2BA99B2F00762370 /* Utilities.swift */; };
 		048D58112BA99D7300762370 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 048D58102BA99D7300762370 /* .gitignore */; };
+		048D58132BA99EEC00762370 /* AuthServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D58122BA99EEC00762370 /* AuthServiceFactory.swift */; };
+		048D58152BA99F1200762370 /* GoogleAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D58142BA99F1200762370 /* GoogleAuthService.swift */; };
+		048D58172BA99F5100762370 /* FirebaseAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D58162BA99F5100762370 /* FirebaseAuthRepository.swift */; };
+		048D58192BA99F7900762370 /* AppleAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D58182BA99F7900762370 /* AppleAuthService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +38,10 @@
 		048D580C2BA99AB900762370 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		048D580E2BA99B2F00762370 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		048D58102BA99D7300762370 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		048D58122BA99EEC00762370 /* AuthServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthServiceFactory.swift; sourceTree = "<group>"; };
+		048D58142BA99F1200762370 /* GoogleAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAuthService.swift; sourceTree = "<group>"; };
+		048D58162BA99F5100762370 /* FirebaseAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthRepository.swift; sourceTree = "<group>"; };
+		048D58182BA99F7900762370 /* AppleAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +77,7 @@
 		048D57E42BA983EA00762370 /* Syrup */ = {
 			isa = PBXGroup;
 			children = (
+				048D581A2BA9A02E00762370 /* Auth */,
 				048D58082BA99A4800762370 /* GoogleService-Info.plist */,
 				048D58022BA9992F00762370 /* App */,
 				048D58012BA998D800762370 /* Utilities */,
@@ -129,6 +138,17 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		048D581A2BA9A02E00762370 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				048D58122BA99EEC00762370 /* AuthServiceFactory.swift */,
+				048D58142BA99F1200762370 /* GoogleAuthService.swift */,
+				048D58182BA99F7900762370 /* AppleAuthService.swift */,
+				048D58162BA99F5100762370 /* FirebaseAuthRepository.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,11 +231,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				048D58132BA99EEC00762370 /* AuthServiceFactory.swift in Sources */,
 				048D580F2BA99B2F00762370 /* Utilities.swift in Sources */,
+				048D58172BA99F5100762370 /* FirebaseAuthRepository.swift in Sources */,
+				048D58152BA99F1200762370 /* GoogleAuthService.swift in Sources */,
 				048D57EA2BA983EA00762370 /* SignInViewController.swift in Sources */,
 				048D57E62BA983EA00762370 /* AppDelegate.swift in Sources */,
 				048D57E82BA983EA00762370 /* SceneDelegate.swift in Sources */,
 				048D580D2BA99AB900762370 /* UserModel.swift in Sources */,
+				048D58192BA99F7900762370 /* AppleAuthService.swift in Sources */,
 				048D580B2BA99A9F00762370 /* SignInViewViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,7 +1,8 @@
 import UIKit
 
-class SignInViewController: UIViewController {
-
+final class SignInViewController: UIViewController {
+    private let viewModel = SignInViewViewModel()
+    
     private let googleSignInButton = {
         let button = UIButton()
         button.setTitle("Google Login", for: .normal)
@@ -56,11 +57,13 @@ class SignInViewController: UIViewController {
     //TODO: ViewModel
     @objc private func onAppleSignInTapped() {
         print("Apple")
+        viewModel.signIn(with: .apple)
     }
     
     //TODO: ViewModel
     @objc private func onGoogleSignInTapped() {
         print("Google")
+        viewModel.signIn(with: .google)
     }
 }
 

@@ -1,5 +1,9 @@
 import Foundation
 
-struct User {
-    
+struct UserModel {
+    let uid: String
+    let userDisplayName: String
+    let userEmail: String
 }
+
+
