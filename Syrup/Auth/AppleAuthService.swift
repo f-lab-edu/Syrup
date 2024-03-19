@@ -9,12 +9,17 @@ final class AppleAuthService: NSObject, AuthServiceProtocol {
         print("Apple Auth Service Sign In")
         startAppleLogin()
     }
-    
+    //Reference, 
     func startAppleLogin() {
-        guard let topVC = Utilities.topViewController() else { return }
+        guard let topVC = Utilities.topViewController() else {
+            print("TopVC None")
+            return
+        }
         
         let nonce = randomNonceString()
         currentNonce = nonce
+        //레퍼런스 킵해야할 변수인지 appleIDProvider, authorizationController
+        //맞다면 멤버변수로 뺴야함
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
@@ -22,7 +27,7 @@ final class AppleAuthService: NSObject, AuthServiceProtocol {
         
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
-        authorizationController.presentationContextProvider = topVC
+        authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
     }
     
@@ -57,9 +62,14 @@ final class AppleAuthService: NSObject, AuthServiceProtocol {
         return hashString
     }
 }
-
-extension UIViewController: ASAuthorizationControllerPresentationContextProviding {
+//Viewcon이 필요없음
+//UIView요구를 하지 않음
+//Top-most viewcon이 필요
+//
+extension AppleAuthService: ASAuthorizationControllerPresentationContextProviding {
     public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        //TopViewcontroller 값 확인 ViewCon과 다른지
+        //guard로 force-unwrapping 하지말기 optional chaining with logs
         return Utilities.topViewController()!.view.window!
     }
 }
@@ -67,7 +77,7 @@ extension UIViewController: ASAuthorizationControllerPresentationContextProvidin
 extension AppleAuthService: ASAuthorizationControllerDelegate {
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        
+        //log 추가 확실히 필요
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
                 fatalError("Invalid state: A login callback was received, but no login request was sent.")
@@ -83,6 +93,7 @@ extension AppleAuthService: ASAuthorizationControllerDelegate {
             
             print("Apple Token : ", appleIDCredential, idTokenString)
         }
+        print("appleIDCredential None")
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
