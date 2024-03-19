@@ -14,7 +14,7 @@ final class FirebaseAuthRepository {
         print(user)
     }
     
-    func getCredentials(idToken: String, accessToken: String) -> AuthCredential? {
+    func getCredentialsForGoogle(idToken: String, accessToken: String) -> AuthCredential? {
         let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
         
         return credential

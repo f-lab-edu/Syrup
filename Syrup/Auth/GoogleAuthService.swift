@@ -19,7 +19,7 @@ final class GoogleAuthService: AuthServiceProtocol {
         let accessToken: String = gidSignInResult.user.accessToken.tokenString
         
         let firebaseAuthRepo = FirebaseAuthRepository()
-        guard let credentials = firebaseAuthRepo.getCredentials(idToken: idToken, accessToken: accessToken) else {
+        guard let credentials = firebaseAuthRepo.getCredentialsForGoogle(idToken: idToken, accessToken: accessToken) else {
             print("No Credentials")
             return
         }
