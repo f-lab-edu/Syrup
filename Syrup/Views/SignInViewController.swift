@@ -20,7 +20,6 @@ final class SignInViewController: UIViewController {
         return button
     }()
     
-    //TODO: View
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemCyan
@@ -28,8 +27,6 @@ final class SignInViewController: UIViewController {
         configureUIApple()
     }
     
-
-    //TODO: View
     private func configureUI() {
         view.addSubview(googleSignInButton)
         googleSignInButton.translatesAutoresizingMaskIntoConstraints = false
@@ -42,7 +39,6 @@ final class SignInViewController: UIViewController {
         googleSignInButton.addTarget(self, action: #selector(onGoogleSignInTapped), for: .touchUpInside)
     }
     
-    //TODO: View
     private func configureUIApple() {
         view.addSubview(appleSignInButton)
         appleSignInButton.translatesAutoresizingMaskIntoConstraints = false
@@ -54,15 +50,11 @@ final class SignInViewController: UIViewController {
         appleSignInButton.addTarget(self, action: #selector(onAppleSignInTapped), for: .touchUpInside)
     }
     
-    //TODO: ViewModel
     @objc private func onAppleSignInTapped() {
-        print("Apple")
         viewModel.signIn(with: .apple)
     }
     
-    //TODO: ViewModel
     @objc private func onGoogleSignInTapped() {
-        print("Google")
         viewModel.signIn(with: .google)
     }
 }

@@ -2,24 +2,49 @@ import Foundation
 import AuthenticationServices
 import CryptoKit
 
+struct SignInWithAppleResult {
+    let token: String
+    let nonce: String
+    let name: String?
+    let email: String?
+}
+
 final class AppleAuthService: NSObject, AuthServiceProtocol {
     fileprivate var currentNonce: String?
+    private var completionHandler: ((Result<SignInWithAppleResult, Error>) -> Void)? = nil
     
     func signIn() async throws {
         print("Apple Auth Service Sign In")
-        startAppleLogin()
-    }
-    //Reference, 
-    func startAppleLogin() {
-        guard let topVC = Utilities.topViewController() else {
-            print("TopVC None")
+        let firebaseAuthRepo = FirebaseAuthRepository()
+        let authResult = try await self.signInWithApple()
+        
+        guard let credential = firebaseAuthRepo.getCredentialsForApple(idToken: authResult.token, nonce: authResult.nonce) else {
+            print("No Credential from Apple tokens")
             return
         }
-        
+        try await firebaseAuthRepo.signIntoFirebase(credential: credential)
+    }
+    
+    private func signInWithApple() async throws -> SignInWithAppleResult {
+        try await withCheckedThrowingContinuation { continuation in
+            self.startAppleLogin { result in
+                switch result {
+                case .success(let signInAppleResult):
+                    continuation.resume(returning: signInAppleResult)
+                    return
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                    return
+                }
+            }
+        }
+    }
+    
+    private func startAppleLogin(completion: @escaping (Result<SignInWithAppleResult, Error>) -> Void) {
         let nonce = randomNonceString()
         currentNonce = nonce
-        //레퍼런스 킵해야할 변수인지 appleIDProvider, authorizationController
-        //맞다면 멤버변수로 뺴야함
+        completionHandler = completion
+        
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
@@ -62,14 +87,13 @@ final class AppleAuthService: NSObject, AuthServiceProtocol {
         return hashString
     }
 }
-//Viewcon이 필요없음
-//UIView요구를 하지 않음
-//Top-most viewcon이 필요
-//
 extension AppleAuthService: ASAuthorizationControllerPresentationContextProviding {
     public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        //TopViewcontroller 값 확인 ViewCon과 다른지
-        //guard로 force-unwrapping 하지말기 optional chaining with logs
+
+        guard (Utilities.topViewController()?.view.window) != nil else {
+            fatalError("topVC not found for AppleAuthService")
+        }
+        
         return Utilities.topViewController()!.view.window!
     }
 }
@@ -77,7 +101,6 @@ extension AppleAuthService: ASAuthorizationControllerPresentationContextProvidin
 extension AppleAuthService: ASAuthorizationControllerDelegate {
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        //log 추가 확실히 필요
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
                 fatalError("Invalid state: A login callback was received, but no login request was sent.")
@@ -92,13 +115,20 @@ extension AppleAuthService: ASAuthorizationControllerDelegate {
             }
             
             print("Apple Token : ", appleIDCredential, idTokenString)
+            
+            let name = appleIDCredential.fullName?.givenName
+            let email = appleIDCredential.email
+            let tokens = SignInWithAppleResult(token: idTokenString, nonce: nonce, name: name, email: email)
+            completionHandler?(.success(tokens))
+            
         }
-        print("appleIDCredential None")
+        print("didCompleteWithAuthorization called")
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         // Handle error.
         print("Sign in with Apple errored: \(error)")
+        completionHandler?(.failure(error))
     }
 }
 

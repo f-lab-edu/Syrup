@@ -6,7 +6,7 @@ final class GoogleAuthService: AuthServiceProtocol {
         try await signInWithGoogle()
     }
     
-    func signInWithGoogle() async throws {
+    private func signInWithGoogle() async throws {
         guard let topVC = Utilities.topViewController() else {
             print("TopViewController not existing")
             return

@@ -20,9 +20,9 @@ final class FirebaseAuthRepository {
         return credential
     }
     
-    func getCredentialsForApple(idToken: String, nonce: String, fullName: PersonNameComponents) -> OAuthCredential? {
-        let credentials = OAuthProvider.appleCredential(withIDToken: idToken, rawNonce: nonce, fullName: fullName)
-        return credentials
+    func getCredentialsForApple(idToken: String, nonce: String) -> OAuthCredential? {
+        let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idToken, rawNonce: nonce)
+        return credential
     }
     
     
