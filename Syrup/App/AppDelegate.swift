@@ -9,7 +9,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         
         guard let clientID = FirebaseApp.app()?.options.clientID else {
-            print("clientID 없음")
+            print("No clientID")
             return false
         }
         

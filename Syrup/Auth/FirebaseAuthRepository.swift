@@ -3,15 +3,8 @@ import FirebaseAuth
 
 final class FirebaseAuthRepository {
     func signIntoFirebase(credential: AuthCredential) async throws {
-        
         let authResult = try await Auth.auth().signIn(with: credential)
         print("AuthResult", authResult.user)
-
-        guard let currentUser = Auth.auth().currentUser else { return }
-        let user = UserModel(uid: currentUser.uid,
-                             userDisplayName: currentUser.displayName ?? "",
-                             userEmail: currentUser.email ?? "")
-        print(user)
     }
     
     func getCredentialsForGoogle(idToken: String, accessToken: String) -> AuthCredential? {
@@ -28,6 +21,14 @@ final class FirebaseAuthRepository {
     
     func getUserStatus() -> User? {
         return Auth.auth().currentUser
+    }
+    
+    func signOut() throws {
+        do {
+            try Auth.auth().signOut()
+        } catch let error {
+            print("sign out failed \(error.localizedDescription)")
+        }
     }
 }
 
