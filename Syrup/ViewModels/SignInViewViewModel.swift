@@ -1,14 +1,16 @@
 import Foundation
 import Combine
 
+
+
 final class SignInViewViewModel {
     private var authServiceProtocol: AuthServiceProtocol?
-    private(set) var userModel: UserModel?    
+    private(set) var userModel: UserModel?
     private let userModelSubject = PassthroughSubject<UserModel?, Never>()
     var userModelPublisher: AnyPublisher<UserModel?, Never> {
         userModelSubject.eraseToAnyPublisher()
     }
-
+    
     
     func signIn(with authServiceType: AuthServiceType) {
         authServiceProtocol = AuthServiceFactory.createAuthService(for: authServiceType)
@@ -29,12 +31,10 @@ final class SignInViewViewModel {
                                           userEmail: currentUser.email ?? "")
                     userModelSubject.send(userModel)
                 }
-
                 
             } catch {
                 print("\(authServiceType) Sign In Error: \(error.localizedDescription)")
             }
         }
     }
-
 }

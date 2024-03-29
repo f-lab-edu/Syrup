@@ -1,5 +1,4 @@
 import UIKit
-import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -13,8 +12,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         
+        let firebaseAuth = FirebaseAuthRepository()
+        let currentUser = firebaseAuth.getUserStatus()
+        
         // Check if the user is logged in
-        if Auth.auth().currentUser != nil {
+        if currentUser != nil {
             // User is signed in, navigate to ChannelListViewController
             let channelListViewController = ChannelListViewController()
             let navigationController = UINavigationController(rootViewController: channelListViewController)

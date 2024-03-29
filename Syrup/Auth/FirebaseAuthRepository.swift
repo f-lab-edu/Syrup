@@ -1,10 +1,14 @@
 import Foundation
 import FirebaseAuth
 
+
+
 final class FirebaseAuthRepository {
     func signIntoFirebase(credential: AuthCredential) async throws {
+        
         let authResult = try await Auth.auth().signIn(with: credential)
         print("AuthResult", authResult.user)
+        
     }
     
     func getCredentialsForGoogle(idToken: String, accessToken: String) -> AuthCredential? {

@@ -11,7 +11,9 @@ final class SignInViewController: UIViewController {
         button.setTitle("Continue with Google", for: .normal)
         button.layer.cornerRadius = 20
         button.backgroundColor = .black
-        button.setImage(UIImage(systemName: "person.crop.circle"), for: .normal)
+        let googleLogo = UIImage(named: "googlelogo")?.resize(to: CGSize(width: 15, height: 15))
+        button.setImage(googleLogo, for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 6)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
@@ -76,17 +78,17 @@ final class SignInViewController: UIViewController {
     
     private func subscribeToUserModelPublisher() {
         // Subscribe to the userModelPublisher
-         viewModel.userModelPublisher
-             .receive(on: DispatchQueue.main)
-             .sink { [weak self] userModel in
-                 if let userModel = userModel {
-                     print("User signed in: \(userModel)")
-                     self?.navigateToChannelListViewController()
-                 } else {
-                     print("No userModel found")
-                 }
-             }
-             .store(in: &cancellables)
+        viewModel.userModelPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] userModel in
+                if let userModel = userModel {
+                    print("User signed in: \(userModel)")
+                    self?.navigateToChannelListViewController()
+                } else {
+                    print("No userModel found")
+                }
+            }
+            .store(in: &cancellables)
     }
 }
 

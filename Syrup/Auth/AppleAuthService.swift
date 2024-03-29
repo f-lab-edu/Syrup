@@ -27,7 +27,7 @@ final class AppleAuthService: NSObject, AuthServiceProtocol {
     
     private func signInWithApple() async throws -> SignInWithAppleResult {
         try await withCheckedThrowingContinuation { continuation in
-            self.startAppleLogin { result in
+            self.presentAppleAuthorizationController { result in
                 switch result {
                 case .success(let signInAppleResult):
                     continuation.resume(returning: signInAppleResult)
@@ -40,7 +40,7 @@ final class AppleAuthService: NSObject, AuthServiceProtocol {
         }
     }
     
-    private func startAppleLogin(completion: @escaping (Result<SignInWithAppleResult, Error>) -> Void) {
+    private func presentAppleAuthorizationController(completion: @escaping (Result<SignInWithAppleResult, Error>) -> Void) {
         let nonce = randomNonceString()
         currentNonce = nonce
         completionHandler = completion

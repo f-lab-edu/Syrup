@@ -1,20 +1,17 @@
 import UIKit
-import FirebaseCore
-import GoogleSignIn
-
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        FirebaseApp.configure()
         
-        guard let clientID = FirebaseApp.app()?.options.clientID else {
+        FirebaseConfigurator.configure()
+        
+        guard let clientID = FirebaseConfigurator.clientID else {
             print("No clientID")
             return false
         }
         
-        let config = GIDConfiguration(clientID: clientID)
-        GIDSignIn.sharedInstance.configuration = config
+        GoogleSignInConfigurator.configure(with: clientID)
         return true
     }
 
