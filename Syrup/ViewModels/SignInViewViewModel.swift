@@ -32,6 +32,10 @@ final class SignInViewViewModel {
                     userModelSubject.send(userModel)
                 }
                 
+            } catch SyrupLoginError.serverError {
+                print("Firebase server error occured.")
+            } catch SyrupLoginError.userDisabled {
+                print("Firebase user login disabled.")
             } catch {
                 print("\(authServiceType) Sign In Error: \(error.localizedDescription)")
             }

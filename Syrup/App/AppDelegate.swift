@@ -3,14 +3,8 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        FirebaseConfigurator.configure()
+        SyrupConfigurator.shared.configure()
         
-        guard let clientID = FirebaseConfigurator.clientID else {
-            print("No clientID found")
-            return true
-        }
-
-        GoogleSignInConfigurator.configure(with: clientID)
         return true
     }
 

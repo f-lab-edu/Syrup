@@ -1,6 +1,12 @@
 import Foundation
 import FirebaseAuth
 
+enum SyrupLoginError: Error {
+    case serverError
+    case userDisabled
+    case unknownError
+}
+
 
 
 final class FirebaseAuthRepository {
@@ -9,7 +15,8 @@ final class FirebaseAuthRepository {
             let authResult = try await Auth.auth().signIn(with: credential)
             print("AuthResult", authResult.user)
         } catch let error as NSError {
-            handleFirebaseAuthError(error)
+            let syrupError = mapFirebaseErrorToSyrupError(error)
+            throw syrupError
         }
     }
     
@@ -37,24 +44,21 @@ final class FirebaseAuthRepository {
         }
     }
     
-    private func handleFirebaseAuthError(_ error: NSError) {
+    private func mapFirebaseErrorToSyrupError(_ error: NSError) -> SyrupLoginError {
         guard let errorCode = AuthErrorCode.Code(rawValue: error.code) else {
-            print("An error occurred: \(error.localizedDescription)")
-            return
+            return .unknownError
         }
         
         switch errorCode {
-        case .invalidCredential:
-            print("Invalid credential.")
-        case .operationNotAllowed:
-            print("Operation not allowed.")
+        case .invalidCredential, .operationNotAllowed:
+            return .serverError
         case .userDisabled:
-            print("User disabled.")
+            return .userDisabled
         default:
-            print("Unhandled Firebase Auth Error: \(errorCode.rawValue) - \(error.localizedDescription)")
-            break
+            return .unknownError
         }
     }
+
 }
 
 
