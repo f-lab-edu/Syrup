@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  syrup
-//
-//  Created by 피닉스 on 2024/04/07.
-//
-
 import UIKit
 
 @main
