@@ -7,7 +7,5 @@ class ViewController: UIViewController {
         view.backgroundColor = .cyan
         // Do any additional setup after loading the view.
     }
-
-
 }
 
