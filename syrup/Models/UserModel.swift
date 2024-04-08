@@ -1,6 +1,6 @@
 import Foundation
 
-struct UserModel {
+struct UserModel: Codable {
     let uid: String
     let userDisplayName: String
     let userEmail: String

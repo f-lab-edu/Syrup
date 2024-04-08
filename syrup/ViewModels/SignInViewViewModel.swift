@@ -11,11 +11,30 @@ final class SignInViewViewModel {
         userModelSubject.eraseToAnyPublisher()
     }
     
+    private func handleSignInSuccess() async {
+        let firebaseAuthRepo = FirebaseAuthRepository()
+        
+        guard let currentUser = firebaseAuthRepo.getUserStatus() else {
+            return
+        }
+        
+        let userModel = UserModel(uid: currentUser.uid,
+                                  userDisplayName: currentUser.displayName ?? "",
+                                  userEmail: currentUser.email ?? "")
+        userModelSubject.send(userModel)
+        
+        let userDataExists = await FirestoreRepository.shared.checkUserDataExists(userUID: userModel.uid)
+        
+        if !userDataExists {
+            FirestoreRepository.shared.saveUserData(userResult: userModel)
+        }
+
+    }
+    
     
     func signIn(with authServiceType: AuthServiceType) {
         authServiceProtocol = AuthServiceFactory.createAuthService(for: authServiceType)
-        let firebaseAuthRepo = FirebaseAuthRepository()
-        
+
         guard let authServiceProtocol = authServiceProtocol else {
             print("authServiceProtocol Error")
             return
@@ -23,14 +42,9 @@ final class SignInViewViewModel {
         
         Task {
             do {
-                try await authServiceProtocol.signIn()
                 
-                if let currentUser = firebaseAuthRepo.getUserStatus()  {
-                    userModel = UserModel(uid: currentUser.uid,
-                                          userDisplayName: currentUser.displayName ?? "",
-                                          userEmail: currentUser.email ?? "")
-                    userModelSubject.send(userModel)
-                }
+                try await authServiceProtocol.signIn()
+                await handleSignInSuccess()
                 
             } catch SyrupLoginError.serverError {
                 print("Firebase server error occured.")

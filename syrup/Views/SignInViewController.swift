@@ -83,6 +83,7 @@ final class SignInViewController: UIViewController {
             .sink { [weak self] userModel in
                 if let userModel = userModel {
                     print("User signed in: \(userModel)")
+                    
                     self?.navigateToChannelListViewController()
                 } else {
                     print("No userModel found")
