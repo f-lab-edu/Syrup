@@ -17,7 +17,7 @@ final class FirestoreRepository {
 
     func createChannel(channel: ChannelModel) {
         let docRef = documentReferenceForCollection(collectionName: "channels", documentID: channel.uid)
-        docRef.setData(["channelID": channel.channelID, "aiServiceType": channel.aiServiceType])
+        docRef.setData(["channelID": channel.channelID, "aiServiceType": channel.aiServiceType.rawValue])
     }
     
     func getChannels(currentUserUID: String) {

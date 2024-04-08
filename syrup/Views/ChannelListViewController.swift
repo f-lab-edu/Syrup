@@ -118,7 +118,7 @@ class ChannelListViewController: UIViewController {
     
     @objc private func onCreateButtonTapped() {
         print("Create Button Tapped")
-        viewModel.createChannel(aiServiceType: "GeminiAI")
+        viewModel.createChannel(aiServiceType: .geminiAI)
     }
     
     @objc private func onDeleteButtonTapped() {

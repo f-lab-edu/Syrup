@@ -1,7 +1,7 @@
 import Foundation
 
 protocol ChannelServiceable {
-    func createChannel(aiServiceType: String)
+    func createChannel(aiServiceType: AIServiceType)
     func getChannels()
     func listenForChannelChanges()
     func deleteChannel()
@@ -32,7 +32,7 @@ final class ChannelService: ChannelServiceable {
         FirestoreRepository.shared.getChannels(currentUserUID: currentUser.uid)
     }
     
-    func createChannel(aiServiceType: String) {
+    func createChannel(aiServiceType: AIServiceType) {
         let currentUser = getCurrentUser()
         guard let currentUser = currentUser else { return }
         

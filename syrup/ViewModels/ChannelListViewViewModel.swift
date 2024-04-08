@@ -8,8 +8,8 @@ final class ChannelListViewViewModel {
         channelService.listenForChannelChanges()
     }
     
-    func createChannel(aiServiceType: String) {
-        channelService.createChannel(aiServiceType: aiServiceType)
+    func createChannel(aiServiceType: AIServiceType) {
+        channelService.createChannel(aiServiceType: .geminiAI)
     }
     
     func getChannel() {
