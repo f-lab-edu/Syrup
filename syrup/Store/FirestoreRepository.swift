@@ -45,17 +45,18 @@ final class FirestoreRepository {
         channelListener = nil
     }
     
-    func deleteChannel(currentUserUID: String) {
+    func deleteChannel(currentUserUID: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let docRef = documentReferenceForCollection(collectionName: "channels", documentID: currentUserUID)
         
         docRef.delete { error in
             if let error = error {
                 print("Error deleting document: \(error.localizedDescription)")
+                completion(.failure(error))
             } else {
                 print("Document successfully deleted")
+                completion(.success(()))
             }
         }
-        
     }
 }
 

@@ -123,7 +123,14 @@ class ChannelListViewController: UIViewController {
     
     @objc private func onDeleteButtonTapped() {
         print("Delete Button Tapped")
-        viewModel.deleteChannel()
+        viewModel.deleteChannel { result in
+            switch result {
+            case .success:
+                print("Channel successfully deleted")
+            case .failure(let error):
+                print("Error deleting channel: \(error.localizedDescription)")
+            }
+        }
     }
     
     @objc private func onGetButtonTapped() {

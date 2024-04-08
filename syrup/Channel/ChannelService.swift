@@ -4,10 +4,12 @@ protocol ChannelServiceable {
     func createChannel(aiServiceType: AIServiceType)
     func getChannels()
     func listenForChannelChanges()
-    func deleteChannel()
+    func deleteChannel(completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 final class ChannelService: ChannelServiceable {
+
+    
     func listenForChannelChanges() {
         let currentUser = getCurrentUser()
         guard let currentUser = currentUser else { return }
@@ -20,10 +22,12 @@ final class ChannelService: ChannelServiceable {
         return firebaseAuthRepo.getUserResultModel()
     }
     
-    func deleteChannel() {
+    func deleteChannel(completion: @escaping (Result<Void, Error>) -> Void) {
         let currentUser = getCurrentUser()
         guard let currentUser = currentUser else { return }
-        FirestoreRepository.shared.deleteChannel(currentUserUID: currentUser.uid)
+        FirestoreRepository.shared.deleteChannel(currentUserUID: currentUser.uid) { result in
+            completion(result)
+        }
     }
     
     func getChannels() {
