@@ -1,8 +1,16 @@
 import Foundation
 import UIKit
 
-class ChannelListViewController: UIViewController {
+class ChannelListViewController: UIViewController, DataDelegate {
     private let viewModel = ChannelListViewViewModel()
+    
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .systemGreen
+        tableView.allowsSelection = true
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        return tableView
+    }()
     
     private let tempSignOutButton = {
         let button = UIButton()
@@ -48,15 +56,76 @@ class ChannelListViewController: UIViewController {
         button.layer.borderWidth = 1
         return button
     }()
-
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("ChannelListViewCon did load")
         view.backgroundColor = .systemCyan
-        configureTempSignOutButton()
-        configureCreateButton()
-        configureCRUDButtons()
+        setupNavigationBar()
+        setupTableView()
+        viewModel.delegate = self
+        
+        Task {
+            try await viewModel.getChannels()
+        }
+    }
+    
+    private func setupNavigationBar() {
+        title = "Channels"
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(title: "Button 1", style: .plain, target: self, action: #selector(button1Tapped)),
+            UIBarButtonItem(title: "Button 2", style: .plain, target: self, action: #selector(button2Tapped))
+        ]
+    }
+
+    private func setupTableView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        configureTableViewUI()
+    }
+    
+    func didUpdateData(_ data: [ChannelModel]) {
+        print("deleagte 구현 \(data)")
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
+
+    @objc func button1Tapped() {
+        print("Button 1 tapped!")
+        Task {
+            do {
+                try await viewModel.getChannels()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+
+    @objc func button2Tapped() {
+        print("Button 2 tapped!")
+        Task {
+            do {
+                try await viewModel.createChannel(aiServiceType: .geminiAI)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+  
+    private func configureTableViewUI() {
+        self.view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+        ])
     }
     
     private func configureTempSignOutButton() {
@@ -114,36 +183,47 @@ class ChannelListViewController: UIViewController {
         getButton.addTarget(self, action: #selector(onGetButtonTapped), for: .touchUpInside)
         listenButton.addTarget(self, action: #selector(onlistenButtonTapped), for: .touchUpInside)
     }
-
+    
     
     @objc private func onCreateButtonTapped() {
         print("Create Button Tapped")
-        viewModel.createChannel(aiServiceType: .geminiAI)
+        Task {
+            do {
+                try await viewModel.createChannel(aiServiceType: .geminiAI)
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
     }
     
     @objc private func onDeleteButtonTapped() {
         print("Delete Button Tapped")
-        viewModel.deleteChannel { result in
-            switch result {
-            case .success:
-                print("Channel successfully deleted")
-            case .failure(let error):
-                print("Error deleting channel: \(error.localizedDescription)")
+        Task {
+            do {
+                try await viewModel.deleteChannel()
+            } catch let error {
+                print(error.localizedDescription)
             }
         }
     }
     
     @objc private func onGetButtonTapped() {
         print("Get Button Tapped")
-        viewModel.getChannel()
+        Task {
+            do {
+                try await viewModel.getChannels()
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
     }
     
     @objc private func onlistenButtonTapped() {
         print("Listen Button Tapped")
-        viewModel.listenForChannelChanges()
+//        viewModel.listenForChannelChanges()
     }
     
-
+    
     
     @objc private func onSignOutButtonTapped() {
         do {
@@ -154,7 +234,20 @@ class ChannelListViewController: UIViewController {
         } catch let error {
             print("sign out error occured \(error.localizedDescription)")
         }
-       
+        
     }
 }
 
+
+extension ChannelListViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.channelList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.textLabel?.text = indexPath.row.description
+        
+        return cell
+    }
+}

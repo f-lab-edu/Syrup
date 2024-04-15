@@ -31,6 +31,8 @@
 		04DD839E2BC3D785004C26C6 /* FirestoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD839D2BC3D785004C26C6 /* FirestoreRepository.swift */; };
 		04DD83A02BC3D7C6004C26C6 /* ChannelListViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD839F2BC3D7C6004C26C6 /* ChannelListViewViewModel.swift */; };
 		04DD83A22BC3D7FF004C26C6 /* ChannelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83A12BC3D7FF004C26C6 /* ChannelModel.swift */; };
+		04DD83A42BCC1696004C26C6 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83A32BCC1696004C26C6 /* TabBarController.swift */; };
+		04DD83A62BCC1B76004C26C6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83A52BCC1B76004C26C6 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +59,8 @@
 		04DD839D2BC3D785004C26C6 /* FirestoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreRepository.swift; sourceTree = "<group>"; };
 		04DD839F2BC3D7C6004C26C6 /* ChannelListViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListViewViewModel.swift; sourceTree = "<group>"; };
 		04DD83A12BC3D7FF004C26C6 /* ChannelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelModel.swift; sourceTree = "<group>"; };
+		04DD83A32BCC1696004C26C6 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		04DD83A52BCC1B76004C26C6 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +120,8 @@
 			children = (
 				04DD83952BC29D3E004C26C6 /* ChannelListViewController.swift */,
 				04DD83972BC29D50004C26C6 /* SignInViewController.swift */,
+				04DD83A32BCC1696004C26C6 /* TabBarController.swift */,
+				04DD83A52BCC1B76004C26C6 /* SettingsViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -275,7 +281,9 @@
 				04DD83982BC29D50004C26C6 /* SignInViewController.swift in Sources */,
 				04DD839E2BC3D785004C26C6 /* FirestoreRepository.swift in Sources */,
 				04DD839B2BC3D75F004C26C6 /* ChannelService.swift in Sources */,
+				04DD83A42BCC1696004C26C6 /* TabBarController.swift in Sources */,
 				04DD83962BC29D3E004C26C6 /* ChannelListViewController.swift in Sources */,
+				04DD83A62BCC1B76004C26C6 /* SettingsViewController.swift in Sources */,
 				04DD838C2BC29CCB004C26C6 /* SyrupConfigurator.swift in Sources */,
 				04DD83A02BC3D7C6004C26C6 /* ChannelListViewViewModel.swift in Sources */,
 				04DD83922BC29CFE004C26C6 /* Utilities.swift in Sources */,
