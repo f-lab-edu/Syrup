@@ -1,63 +1,25 @@
 import Foundation
 import UIKit
 
-class ChannelListViewController: UIViewController, DataDelegate {
+class ChannelListViewController: UIViewController, DataDelegate, ChannelErrorDelegate {
+    
     private let viewModel = ChannelListViewViewModel()
     
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .systemGreen
         tableView.allowsSelection = true
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(CustomChannelCell.self, forCellReuseIdentifier: CustomChannelCell.identifier)
         return tableView
     }()
     
-    private let tempSignOutButton = {
-        let button = UIButton()
-        button.setTitle("sign out", for: .normal)
-        button.tintColor = .black
-        button.layer.cornerRadius = 20
-        button.layer.borderWidth = 1
-        return button
-    }()
-    
-    private let createButton = {
-        let button = UIButton()
-        button.setTitle("Create Channel", for: .normal)
-        button.tintColor = .black
-        button.layer.cornerRadius = 20
-        button.layer.borderWidth = 1
-        return button
-    }()
-    
-    private let deleteButton = {
-        let button = UIButton()
-        button.setTitle("delete Channel", for: .normal)
-        button.tintColor = .black
-        button.layer.cornerRadius = 20
-        button.layer.borderWidth = 1
-        return button
-    }()
-    
-    private let getButton = {
-        let button = UIButton()
-        button.setTitle("get Channels", for: .normal)
-        button.tintColor = .black
-        button.layer.cornerRadius = 20
-        button.layer.borderWidth = 1
-        return button
-    }()
-    
-    private let listenButton = {
-        let button = UIButton()
-        button.setTitle("listen for Channels", for: .normal)
-        button.tintColor = .black
-        button.layer.cornerRadius = 20
-        button.layer.borderWidth = 1
-        return button
-    }()
-    
-    
+    override func viewWillAppear(_ animated: Bool) {
+        print("View Will Appear")
+        super.viewWillAppear(animated)
+        Task {
+            await viewModel.getChannels()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,25 +28,36 @@ class ChannelListViewController: UIViewController, DataDelegate {
         setupNavigationBar()
         setupTableView()
         viewModel.delegate = self
+        viewModel.errorDelegate = self
         
         Task {
-            try await viewModel.getChannels()
+            await viewModel.getChannels()
         }
     }
     
     private func setupNavigationBar() {
         title = "Channels"
         navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(title: "Button 1", style: .plain, target: self, action: #selector(button1Tapped)),
-            UIBarButtonItem(title: "Button 2", style: .plain, target: self, action: #selector(button2Tapped))
+            UIBarButtonItem(title: "Create", style: .plain, target: self, action: #selector(createChannelButtonTapped)),
         ]
     }
-
+    
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         configureTableViewUI()
     }
+    
+    func didEncounterError(_ error: Error) {
+        showAlert(withMessage: error.localizedDescription)
+    }
+    
+    private func showAlert(withMessage message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+    
     
     func didUpdateData(_ data: [ChannelModel]) {
         print("deleagte 구현 \(data)")
@@ -92,30 +65,15 @@ class ChannelListViewController: UIViewController, DataDelegate {
             self?.tableView.reloadData()
         }
     }
-
-    @objc func button1Tapped() {
+    
+    @objc func createChannelButtonTapped() {
         print("Button 1 tapped!")
         Task {
-            do {
-                try await viewModel.getChannels()
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-    }
-
-    @objc func button2Tapped() {
-        print("Button 2 tapped!")
-        Task {
-            do {
-                try await viewModel.createChannel(aiServiceType: .geminiAI)
-            } catch {
-                print(error.localizedDescription)
-            }
+            await viewModel.createChannel(aiServiceType: .geminiAI)
+            await viewModel.getChannels()
         }
     }
     
-  
     private func configureTableViewUI() {
         self.view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -128,113 +86,18 @@ class ChannelListViewController: UIViewController, DataDelegate {
         ])
     }
     
-    private func configureTempSignOutButton() {
-        view.addSubview(tempSignOutButton)
-        tempSignOutButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            tempSignOutButton.heightAnchor.constraint(equalToConstant: 64),
-            tempSignOutButton.widthAnchor.constraint(equalToConstant: 200),
-            tempSignOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            tempSignOutButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
-        
-        tempSignOutButton.addTarget(self, action: #selector(onSignOutButtonTapped), for: .touchUpInside)
-    }
-    
-    private func configureCreateButton() {
-        view.addSubview(createButton)
-        createButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            createButton.heightAnchor.constraint(equalToConstant: 64),
-            createButton.widthAnchor.constraint(equalToConstant: 200),
-            createButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            createButton.topAnchor.constraint(equalTo: tempSignOutButton.bottomAnchor, constant: 20)
-        ])
-        
-        createButton.addTarget(self, action: #selector(onCreateButtonTapped), for: .touchUpInside)
-    }
-    
-    private func configureCRUDButtons() {
-        view.addSubview(deleteButton)
-        view.addSubview(getButton)
-        view.addSubview(listenButton)
-        deleteButton.translatesAutoresizingMaskIntoConstraints = false
-        getButton.translatesAutoresizingMaskIntoConstraints = false
-        listenButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            deleteButton.heightAnchor.constraint(equalToConstant: 64),
-            deleteButton.widthAnchor.constraint(equalToConstant: 200),
-            deleteButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            deleteButton.topAnchor.constraint(equalTo: createButton.bottomAnchor, constant: 20),
-            getButton.heightAnchor.constraint(equalToConstant: 64),
-            getButton.widthAnchor.constraint(equalToConstant: 200),
-            getButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            getButton.topAnchor.constraint(equalTo: deleteButton.bottomAnchor, constant: 20),
-            listenButton.heightAnchor.constraint(equalToConstant: 64),
-            listenButton.widthAnchor.constraint(equalToConstant: 200),
-            listenButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            listenButton.topAnchor.constraint(equalTo: getButton.bottomAnchor, constant: 20)
-        ])
-        
-        deleteButton.addTarget(self, action: #selector(onDeleteButtonTapped), for: .touchUpInside)
-        getButton.addTarget(self, action: #selector(onGetButtonTapped), for: .touchUpInside)
-        listenButton.addTarget(self, action: #selector(onlistenButtonTapped), for: .touchUpInside)
-    }
-    
-    
     @objc private func onCreateButtonTapped() {
         print("Create Button Tapped")
         Task {
-            do {
-                try await viewModel.createChannel(aiServiceType: .geminiAI)
-            } catch let error {
-                print(error.localizedDescription)
-            }
+            await viewModel.createChannel(aiServiceType: .geminiAI)
         }
     }
     
-    @objc private func onDeleteButtonTapped() {
+    private func deleteChannel(at index: Int) {
         print("Delete Button Tapped")
         Task {
-            do {
-                try await viewModel.deleteChannel()
-            } catch let error {
-                print(error.localizedDescription)
-            }
+            await viewModel.deleteChannel(at: index)
         }
-    }
-    
-    @objc private func onGetButtonTapped() {
-        print("Get Button Tapped")
-        Task {
-            do {
-                try await viewModel.getChannels()
-            } catch let error {
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
-    @objc private func onlistenButtonTapped() {
-        print("Listen Button Tapped")
-//        viewModel.listenForChannelChanges()
-    }
-    
-    
-    
-    @objc private func onSignOutButtonTapped() {
-        do {
-            let firebaseAuthRepo = FirebaseAuthRepository()
-            try firebaseAuthRepo.signOut()
-            let signInViewController = SignInViewController()
-            navigationController?.setViewControllers([signInViewController], animated: true)
-        } catch let error {
-            print("sign out error occured \(error.localizedDescription)")
-        }
-        
     }
 }
 
@@ -245,9 +108,41 @@ extension ChannelListViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = indexPath.row.description
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomChannelCell.identifier, for: indexPath) as? CustomChannelCell else {
+            fatalError("TableView Custom Cell Deque Error")
+        }
+        let image = UIImage(systemName: "questionmark")
+        //Last Chat Message and Image 넣는 곳
+        cell.configure(with: image!, and: "hi")
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("didSelectRowAt", indexPath.row.description)
+        print(viewModel.channelList[indexPath.row])
+        
+        let detailVC = DetailChannelViewController()
+        detailVC.channel = viewModel.channelList[indexPath.row]
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        Task {
+            await viewModel.deleteChannel(at: indexPath.row)
+            
+            DispatchQueue.main.async {
+                tableView.beginUpdates()
+                self.viewModel.channelList.remove(at: indexPath.row)
+                
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                tableView.endUpdates()
+            }
+        }
     }
 }

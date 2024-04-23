@@ -40,8 +40,8 @@ final class FirestoreRepository {
         return data
     }
 
-    func deleteChannel(currentUserUID: String) async throws {
-        let docRef = documentReferenceForCollection(collectionName: .channels, documentID: currentUserUID)
+    func deleteChannel(channelID: String) async throws {
+        let docRef = documentReferenceForCollection(collectionName: .channels, documentID: channelID)
         try await docRef.delete()
     }
     

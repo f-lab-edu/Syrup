@@ -4,8 +4,7 @@ import Combine
 protocol ChannelServiceable {
     func createChannel(aiServiceType: AIServiceType) async throws
     func getChannels() async throws -> [ChannelModel]?
-    //    func listenForChannelChanges()
-    func deleteChannel() async throws
+    func deleteChannel(at channelID: String) async throws
 }
 
 final class ChannelService: ChannelServiceable {
@@ -16,10 +15,8 @@ final class ChannelService: ChannelServiceable {
         return firebaseAuthRepo.getUserResultModel()
     }
     
-    func deleteChannel() async throws {
-        let currentUser = getCurrentUser()
-        guard let currentUser = currentUser else { return }
-        try await FirestoreRepository.shared.deleteChannel(currentUserUID: currentUser.uid)
+    func deleteChannel(at channelID: String) async throws {
+        try await FirestoreRepository.shared.deleteChannel(channelID: channelID)
     }
     
     func getChannels() async throws -> [ChannelModel]? {
@@ -35,35 +32,4 @@ final class ChannelService: ChannelServiceable {
         let channelModel = ChannelModel(channelID: UUID().uuidString, uid: currentUser.uid, aiServiceType: aiServiceType)
         try await FirestoreRepository.shared.createChannel(channel: channelModel)
     }
-    
-    
-    //    func listenForChannelChanges() {
-    //        let currentUser = getCurrentUser()
-    //        guard let currentUser = currentUser else { return }
-    //        FirestoreRepository.shared.listenForChannelChanges(userID: currentUser.uid)
-    //    }
-    
-    
-    
-    //    func deleteChannel(completion: @escaping (Result<Void, Error>) -> Void) {
-    //        let currentUser = getCurrentUser()
-    //        guard let currentUser = currentUser else { return }
-    //        FirestoreRepository.shared.deleteChannel(currentUserUID: currentUser.uid) { result in
-    //            completion(result)
-    //        }
-    //    }
-    
-    //    func getChannels() {
-    //        let currentUser = getCurrentUser()
-    //        guard let currentUser = currentUser else { return }
-    //        FirestoreRepository.shared.getChannels(currentUserUID: <#T##String#>)
-    //    }
-    
-    //    func createChannel(aiServiceType: AIServiceType) {
-    //        let currentUser = getCurrentUser()
-    //        guard let currentUser = currentUser else { return }
-    //
-    //        let channelModel = ChannelModel(channelID: UUID().uuidString, uid: currentUser.uid, aiServiceType: aiServiceType)
-    //        FirestoreRepository.shared.createChannel(channel: channelModel)
-    //    }
 }
