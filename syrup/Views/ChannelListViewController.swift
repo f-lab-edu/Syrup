@@ -123,6 +123,7 @@ extension ChannelListViewController: UITableViewDelegate, UITableViewDataSource 
         print(viewModel.channelList[indexPath.row])
         
         let detailVC = DetailChannelViewController()
+        detailVC.hidesBottomBarWhenPushed = true
         detailVC.channel = viewModel.channelList[indexPath.row]
         navigationController?.pushViewController(detailVC, animated: true)
     }

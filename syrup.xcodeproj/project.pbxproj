@@ -35,6 +35,7 @@
 		04DD83A62BCC1B76004C26C6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83A52BCC1B76004C26C6 /* SettingsViewController.swift */; };
 		04DD83A82BD501EB004C26C6 /* CustomChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83A72BD501EB004C26C6 /* CustomChannelCell.swift */; };
 		04DD83AA2BD7C9E9004C26C6 /* DetailChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83A92BD7C9E9004C26C6 /* DetailChannelViewController.swift */; };
+		04DD83AD2BD900EE004C26C6 /* DetailChannelViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83AC2BD900EE004C26C6 /* DetailChannelViewViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,7 @@
 		04DD83A52BCC1B76004C26C6 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		04DD83A72BD501EB004C26C6 /* CustomChannelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomChannelCell.swift; sourceTree = "<group>"; };
 		04DD83A92BD7C9E9004C26C6 /* DetailChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailChannelViewController.swift; sourceTree = "<group>"; };
+		04DD83AC2BD900EE004C26C6 /* DetailChannelViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailChannelViewViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 			children = (
 				04DD83932BC29D21004C26C6 /* SignInViewViewModel.swift */,
 				04DD839F2BC3D7C6004C26C6 /* ChannelListViewViewModel.swift */,
+				04DD83AC2BD900EE004C26C6 /* DetailChannelViewViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				04DD83922BC29CFE004C26C6 /* Utilities.swift in Sources */,
 				04DD83542BC280B7004C26C6 /* AppDelegate.swift in Sources */,
 				04DD83902BC29CEF004C26C6 /* UIImage+Resize.swift in Sources */,
+				04DD83AD2BD900EE004C26C6 /* DetailChannelViewViewModel.swift in Sources */,
 				04DD83AA2BD7C9E9004C26C6 /* DetailChannelViewController.swift in Sources */,
 				04DD83882BC29CA7004C26C6 /* FirebaseAuthRepository.swift in Sources */,
 				04DD83A22BC3D7FF004C26C6 /* ChannelModel.swift in Sources */,
