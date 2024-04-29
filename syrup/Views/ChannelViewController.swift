@@ -1,7 +1,7 @@
 import UIKit
 
-class DetailChannelViewController: UIViewController {
-    private let viewModel = DetailChannelViewViewModel()
+class ChannelViewController: UIViewController {
+    private let viewModel = ChannelViewViewModel()
     var channel: ChannelModel?
     lazy private var inputField: UITextView = {
         let textView = UITextView()
@@ -26,7 +26,7 @@ class DetailChannelViewController: UIViewController {
         return textView
     }()
     
-    lazy private var tablewView = {
+    lazy private var tableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -98,7 +98,7 @@ class DetailChannelViewController: UIViewController {
 }
 
 //MARK: TextField Delegate
-extension DetailChannelViewController: UITextViewDelegate {
+extension ChannelViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         print("ViewDidChange")
@@ -110,7 +110,7 @@ extension DetailChannelViewController: UITextViewDelegate {
 }
 
 //MARK: TableView Delegates
-extension DetailChannelViewController: UITableViewDelegate, UITableViewDataSource {
+extension ChannelViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         5
     }
@@ -122,8 +122,8 @@ extension DetailChannelViewController: UITableViewDelegate, UITableViewDataSourc
     }
 }
 
-extension DetailChannelViewController: DetailChannelViewViewModelDelegate {
-    func didUpdateData(_ detailChannel: DetailChannelViewViewModel) {
+extension ChannelViewController: ChannelViewViewModelDelegate {
+    func didUpdateData(_ viewModel: ChannelViewViewModel) {
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
         }

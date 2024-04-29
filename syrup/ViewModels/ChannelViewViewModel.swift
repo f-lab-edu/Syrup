@@ -1,13 +1,13 @@
 import UIKit
 
-protocol DetailChannelViewViewModelDelegate: AnyObject {
-    func didUpdateData(_ detailChannel: DetailChannelViewViewModel)
+protocol ChannelViewViewModelDelegate: AnyObject {
+    func didUpdateData(_ viewModel: ChannelViewViewModel)
 }
 
-final class DetailChannelViewViewModel {
+final class ChannelViewViewModel {
     private var aiServce: AIServiceable
     var messages: [MessageModel] = [MessageModel]()
-    weak var delegate: DetailChannelViewViewModelDelegate?
+    weak var delegate: ChannelViewViewModelDelegate?
     
     init() {
         self.aiServce = GeminiAIRepository()
@@ -25,7 +25,7 @@ final class DetailChannelViewViewModel {
     }
 }
 
-extension DetailChannelViewViewModel: AIRepositoryDelegate {
+extension ChannelViewViewModel: AIRepositoryDelegate {
     func didSendMessageSuccessfully() {
         //메세지 성공 처리
         self.delegate?.didUpdateData(self)
