@@ -16,10 +16,12 @@ final class DetailChannelViewViewModel {
     
     func sendMessage(_ message: String) {
         print("send message vm")
+        aiServce.sendMessage(message)
     }
     
     func getMessages() {
         print("get message vm")
+        aiServce.getMessages()
     }
 }
 
