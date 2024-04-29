@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class ChannelListViewController: UIViewController, DataDelegate, ChannelErrorDelegate {
+class ChannelListViewController: UIViewController, ChannelErrorDelegate {
     
     private let viewModel = ChannelListViewViewModel()
     
@@ -16,9 +16,6 @@ class ChannelListViewController: UIViewController, DataDelegate, ChannelErrorDel
     override func viewWillAppear(_ animated: Bool) {
         print("View Will Appear")
         super.viewWillAppear(animated)
-        Task {
-            await viewModel.getChannels()
-        }
     }
     
     override func viewDidLoad() {
@@ -29,10 +26,7 @@ class ChannelListViewController: UIViewController, DataDelegate, ChannelErrorDel
         setupTableView()
         viewModel.delegate = self
         viewModel.errorDelegate = self
-        
-        Task {
-            await viewModel.getChannels()
-        }
+ 
     }
     
     private func setupNavigationBar() {
@@ -59,18 +53,10 @@ class ChannelListViewController: UIViewController, DataDelegate, ChannelErrorDel
     }
     
     
-    func didUpdateData(_ data: [ChannelModel]) {
-        print("deleagte 구현 \(data)")
-        DispatchQueue.main.async { [weak self] in
-            self?.tableView.reloadData()
-        }
-    }
-    
     @objc func createChannelButtonTapped() {
         print("Button 1 tapped!")
         Task {
             await viewModel.createChannel(aiServiceType: .geminiAI)
-            await viewModel.getChannels()
         }
     }
     
@@ -133,17 +119,17 @@ extension ChannelListViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
+
         Task {
             await viewModel.deleteChannel(at: indexPath.row)
-            
-            DispatchQueue.main.async {
-                tableView.beginUpdates()
-                self.viewModel.channelList.remove(at: indexPath.row)
-                
-                tableView.deleteRows(at: [indexPath], with: .fade)
-                tableView.endUpdates()
-            }
+        }
+    }
+}
+
+extension ChannelListViewController: ChannelListViewViewModelDelegate {
+    func didUpdateData(_ channel: ChannelListViewViewModel) {
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
         }
     }
 }

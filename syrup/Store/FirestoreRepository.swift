@@ -7,10 +7,27 @@ enum FirestoreCollection: String {
     case users
 }
 
+protocol FirestoreRepositoryChannelDelegate: AnyObject {
+    func didUpdateChannelList(_ repository: FirestoreRepository)
+}
+
+protocol FirestoreRepositoryMessageDelegate: AnyObject {
+    func didUpdateMessageList(_ repository: FirestoreRepository)
+    func didSaveMessage(_ repository: FirestoreRepository)
+}
+
+
+protocol ChatServiceable {
+    func saveMessage(_ message: String) async throws
+    func getMessages() async throws
+}
+
 final class FirestoreRepository {
+    weak var channelDelegate: FirestoreRepositoryChannelDelegate?
+    weak var messageDelegate: FirestoreRepositoryMessageDelegate?
     static let shared = FirestoreRepository()
     private let db: Firestore
-//    private var channelListener: ListenerRegistration?
+    private var channelListener: ListenerRegistration?
     private var channelListnerDict: [String: ListenerRegistration] = [String: ListenerRegistration]()
     
     private init() {
@@ -33,8 +50,8 @@ final class FirestoreRepository {
     func getChannels(currentUserUID: String) async throws -> [ChannelModel]? {
         let channelsRef = db.collection(FirestoreCollection.channels.rawValue)
         let query = channelsRef.whereField("uid", isEqualTo: currentUserUID)
-        let snapshot2 = try await query.getDocuments()
-        let data = snapshot2.documents.compactMap { document in
+        let snapshot = try await query.getDocuments()
+        let data = snapshot.documents.compactMap { document in
             return ChannelDTO(data: document.data())?.toModel()
         }
         return data
@@ -45,23 +62,25 @@ final class FirestoreRepository {
         try await docRef.delete()
     }
     
-//    func listenForChannelChanges(userID: String) {
-//        let docRef = documentReferenceForCollection(collectionName: .channels, documentID: userID)
-//
-//        channelListener = docRef.addSnapshotListener { snapshot, error in
-//            guard let result = snapshot?.data(), error == nil else {
-//                return
-//            }
-//            print(result)
-//        }
-//    }
-//
-//    func removeChannelListener() {
-//        channelListener?.remove()
-//        channelListener = nil
-//    }
+    func listenForChannelChanges(userID: String) {
+        let docRef = documentReferenceForCollection(collectionName: .channels, documentID: userID)
+
+        channelListener = docRef.addSnapshotListener { snapshot, error in
+            guard let result = snapshot?.data(), error == nil else {
+                return
+            }
+            print(result)
+            self.channelDelegate?.didUpdateChannelList(self)
+        }
+    }
+    
+    func removeChannelListener() {
+        channelListener?.remove()
+        channelListener = nil
+    }
 }
 
+//MARK: User data database
 extension FirestoreRepository {
     func saveUserData(userResult: UserModel) {
         let docRef = documentReferenceForCollection(collectionName: .users, documentID: userResult.uid)
@@ -78,5 +97,19 @@ extension FirestoreRepository {
             print("Error checking user data existence: \(error.localizedDescription)")
             return false
         }
+    }
+}
+
+//MARK: ChatServiceable Protocol
+extension FirestoreRepository: ChatServiceable {
+    func saveMessage(_ message: String) async throws {
+        print("save Message FirestoreRepo")
+        self.messageDelegate?.didSaveMessage(self)
+        
+    }
+    
+    func getMessages() async throws {
+        print("get messages FirestoreRepo")
+        self.messageDelegate?.didUpdateMessageList(self)
     }
 }

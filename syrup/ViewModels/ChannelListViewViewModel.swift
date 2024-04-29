@@ -1,6 +1,6 @@
 import Foundation
-protocol DataDelegate: AnyObject {
-    func didUpdateData(_ data: [ChannelModel])
+protocol ChannelListViewViewModelDelegate: AnyObject {
+    func didUpdateData(_ channel: ChannelListViewViewModel)
 }
 
 protocol ChannelErrorDelegate: AnyObject {
@@ -10,29 +10,22 @@ protocol ChannelErrorDelegate: AnyObject {
 
 
 final class ChannelListViewViewModel {
-    private let channelService: ChannelServiceable = ChannelService()
-    weak var delegate: DataDelegate?
+    private var channelService: ChannelServiceable
+    weak var delegate: ChannelListViewViewModelDelegate?
     weak var errorDelegate: ChannelErrorDelegate?
     
-    var channelList: [ChannelModel] = [ChannelModel]() {
-        didSet {
-            delegate?.didUpdateData(channelList)
-        }
+    var channelList: [ChannelModel] {
+        return channelService.channels
+    }
+    
+    init() {
+        channelService = ChannelService()
+        channelService.delegate = self
     }
     
     func createChannel(aiServiceType: AIServiceType) async {
          do {
-             try await channelService.createChannel(aiServiceType: .geminiAI)
-         } catch {
-             errorDelegate?.didEncounterError(error)
-         }
-     }
-     
-     func getChannels() async {
-         do {
-             let channels = try await channelService.getChannels()
-             guard let channels = channels else { return }
-             channelList = channels
+            try await channelService.createChannel(aiServiceType: .geminiAI)
          } catch {
              errorDelegate?.didEncounterError(error)
          }
@@ -46,5 +39,12 @@ final class ChannelListViewViewModel {
              errorDelegate?.didEncounterError(error)
          }
      }
+}
+
+extension ChannelListViewViewModel: ChannelServiceDelegate {
+    func didChannelsUpdate(_ service: ChannelService) {
+        delegate?.didUpdateData(self)
+    }
+
 }
 
