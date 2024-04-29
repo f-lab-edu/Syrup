@@ -27,6 +27,18 @@
 		04DD83942BC29D21004C26C6 /* SignInViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83932BC29D21004C26C6 /* SignInViewViewModel.swift */; };
 		04DD83962BC29D3E004C26C6 /* ChannelListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83952BC29D3E004C26C6 /* ChannelListViewController.swift */; };
 		04DD83982BC29D50004C26C6 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83972BC29D50004C26C6 /* SignInViewController.swift */; };
+		04DD839B2BC3D75F004C26C6 /* ChannelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD839A2BC3D75F004C26C6 /* ChannelService.swift */; };
+		04DD839E2BC3D785004C26C6 /* FirestoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD839D2BC3D785004C26C6 /* FirestoreRepository.swift */; };
+		04DD83A02BC3D7C6004C26C6 /* ChannelListViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD839F2BC3D7C6004C26C6 /* ChannelListViewViewModel.swift */; };
+		04DD83A22BC3D7FF004C26C6 /* ChannelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83A12BC3D7FF004C26C6 /* ChannelModel.swift */; };
+		04DD83A42BCC1696004C26C6 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83A32BCC1696004C26C6 /* TabBarController.swift */; };
+		04DD83A62BCC1B76004C26C6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83A52BCC1B76004C26C6 /* SettingsViewController.swift */; };
+		04DD83A82BD501EB004C26C6 /* CustomChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83A72BD501EB004C26C6 /* CustomChannelCell.swift */; };
+		04DD83AA2BD7C9E9004C26C6 /* DetailChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83A92BD7C9E9004C26C6 /* DetailChannelViewController.swift */; };
+		04DD83AD2BD900EE004C26C6 /* DetailChannelViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83AC2BD900EE004C26C6 /* DetailChannelViewViewModel.swift */; };
+		04DD83B02BDF4AB5004C26C6 /* GeminiAIRepostiory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83AF2BDF4AB5004C26C6 /* GeminiAIRepostiory.swift */; };
+		04DD83B22BDF4C04004C26C6 /* AIServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83B12BDF4C04004C26C6 /* AIServiceFactory.swift */; };
+		04DD83B42BDF94CC004C26C6 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83B32BDF94CC004C26C6 /* MessageModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +61,18 @@
 		04DD83932BC29D21004C26C6 /* SignInViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewViewModel.swift; sourceTree = "<group>"; };
 		04DD83952BC29D3E004C26C6 /* ChannelListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListViewController.swift; sourceTree = "<group>"; };
 		04DD83972BC29D50004C26C6 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		04DD839A2BC3D75F004C26C6 /* ChannelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelService.swift; sourceTree = "<group>"; };
+		04DD839D2BC3D785004C26C6 /* FirestoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreRepository.swift; sourceTree = "<group>"; };
+		04DD839F2BC3D7C6004C26C6 /* ChannelListViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListViewViewModel.swift; sourceTree = "<group>"; };
+		04DD83A12BC3D7FF004C26C6 /* ChannelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelModel.swift; sourceTree = "<group>"; };
+		04DD83A32BCC1696004C26C6 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		04DD83A52BCC1B76004C26C6 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		04DD83A72BD501EB004C26C6 /* CustomChannelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomChannelCell.swift; sourceTree = "<group>"; };
+		04DD83A92BD7C9E9004C26C6 /* DetailChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailChannelViewController.swift; sourceTree = "<group>"; };
+		04DD83AC2BD900EE004C26C6 /* DetailChannelViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailChannelViewViewModel.swift; sourceTree = "<group>"; };
+		04DD83AF2BDF4AB5004C26C6 /* GeminiAIRepostiory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiAIRepostiory.swift; sourceTree = "<group>"; };
+		04DD83B12BDF4C04004C26C6 /* AIServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIServiceFactory.swift; sourceTree = "<group>"; };
+		04DD83B32BDF94CC004C26C6 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +109,9 @@
 		04DD83522BC280B7004C26C6 /* syrup */ = {
 			isa = PBXGroup;
 			children = (
+				04DD83AE2BDF4A95004C26C6 /* AI */,
+				04DD839C2BC3D77B004C26C6 /* Store */,
+				04DD83992BC3D74D004C26C6 /* Channel */,
 				04DD83822BC29C19004C26C6 /* Models */,
 				04DD83812BC29C12004C26C6 /* App */,
 				04DD83802BC29C0C004C26C6 /* Auth */,
@@ -106,6 +133,10 @@
 			children = (
 				04DD83952BC29D3E004C26C6 /* ChannelListViewController.swift */,
 				04DD83972BC29D50004C26C6 /* SignInViewController.swift */,
+				04DD83A32BCC1696004C26C6 /* TabBarController.swift */,
+				04DD83A52BCC1B76004C26C6 /* SettingsViewController.swift */,
+				04DD83A72BD501EB004C26C6 /* CustomChannelCell.swift */,
+				04DD83A92BD7C9E9004C26C6 /* DetailChannelViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -114,6 +145,8 @@
 			isa = PBXGroup;
 			children = (
 				04DD83932BC29D21004C26C6 /* SignInViewViewModel.swift */,
+				04DD839F2BC3D7C6004C26C6 /* ChannelListViewViewModel.swift */,
+				04DD83AC2BD900EE004C26C6 /* DetailChannelViewViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -159,8 +192,35 @@
 			isa = PBXGroup;
 			children = (
 				04DD838D2BC29CDC004C26C6 /* UserModel.swift */,
+				04DD83A12BC3D7FF004C26C6 /* ChannelModel.swift */,
+				04DD83B32BDF94CC004C26C6 /* MessageModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		04DD83992BC3D74D004C26C6 /* Channel */ = {
+			isa = PBXGroup;
+			children = (
+				04DD839A2BC3D75F004C26C6 /* ChannelService.swift */,
+			);
+			path = Channel;
+			sourceTree = "<group>";
+		};
+		04DD839C2BC3D77B004C26C6 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				04DD839D2BC3D785004C26C6 /* FirestoreRepository.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		04DD83AE2BDF4A95004C26C6 /* AI */ = {
+			isa = PBXGroup;
+			children = (
+				04DD83AF2BDF4AB5004C26C6 /* GeminiAIRepostiory.swift */,
+				04DD83B12BDF4C04004C26C6 /* AIServiceFactory.swift */,
+			);
+			path = AI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,14 +305,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				04DD83982BC29D50004C26C6 /* SignInViewController.swift in Sources */,
+				04DD839E2BC3D785004C26C6 /* FirestoreRepository.swift in Sources */,
+				04DD839B2BC3D75F004C26C6 /* ChannelService.swift in Sources */,
+				04DD83A42BCC1696004C26C6 /* TabBarController.swift in Sources */,
+				04DD83B22BDF4C04004C26C6 /* AIServiceFactory.swift in Sources */,
 				04DD83962BC29D3E004C26C6 /* ChannelListViewController.swift in Sources */,
+				04DD83B02BDF4AB5004C26C6 /* GeminiAIRepostiory.swift in Sources */,
+				04DD83A62BCC1B76004C26C6 /* SettingsViewController.swift in Sources */,
+				04DD83A82BD501EB004C26C6 /* CustomChannelCell.swift in Sources */,
 				04DD838C2BC29CCB004C26C6 /* SyrupConfigurator.swift in Sources */,
+				04DD83A02BC3D7C6004C26C6 /* ChannelListViewViewModel.swift in Sources */,
 				04DD83922BC29CFE004C26C6 /* Utilities.swift in Sources */,
 				04DD83542BC280B7004C26C6 /* AppDelegate.swift in Sources */,
 				04DD83902BC29CEF004C26C6 /* UIImage+Resize.swift in Sources */,
+				04DD83AD2BD900EE004C26C6 /* DetailChannelViewViewModel.swift in Sources */,
+				04DD83AA2BD7C9E9004C26C6 /* DetailChannelViewController.swift in Sources */,
 				04DD83882BC29CA7004C26C6 /* FirebaseAuthRepository.swift in Sources */,
+				04DD83A22BC3D7FF004C26C6 /* ChannelModel.swift in Sources */,
 				04DD83842BC29C74004C26C6 /* AppleAuthService.swift in Sources */,
 				04DD838A2BC29CB2004C26C6 /* GoogleAuthService.swift in Sources */,
+				04DD83B42BDF94CC004C26C6 /* MessageModel.swift in Sources */,
 				04DD83862BC29C98004C26C6 /* AuthServiceFactory.swift in Sources */,
 				04DD838E2BC29CDC004C26C6 /* UserModel.swift in Sources */,
 				04DD83562BC280B7004C26C6 /* SceneDelegate.swift in Sources */,

@@ -7,8 +7,6 @@ enum SyrupLoginError: Error {
     case unknownError
 }
 
-
-
 final class FirebaseAuthRepository {
     func signIntoFirebase(credential: AuthCredential) async throws {
         do {
@@ -31,9 +29,15 @@ final class FirebaseAuthRepository {
         return credential
     }
     
-    
     func getUserStatus() -> User? {
         return Auth.auth().currentUser
+    }
+    
+    
+    func getUserResultModel() -> UserModel? {
+        let currentUser = Auth.auth().currentUser
+        let userStatus = UserModel(uid: currentUser?.uid ?? "", userDisplayName: currentUser?.displayName ?? "", userEmail: currentUser?.email ?? "")
+        return userStatus
     }
     
     func signOut() throws {

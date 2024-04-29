@@ -72,24 +72,57 @@ final class SignInViewController: UIViewController {
     
     private func navigateToChannelListViewController() {
         let channelListViewController = ChannelListViewController()
-        //User back button + swipe gesture block
         navigationController?.setViewControllers([channelListViewController], animated: true)
     }
     
     private func subscribeToUserModelPublisher() {
-        // Subscribe to the userModelPublisher
         viewModel.userModelPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] userModel in
+            .sink(receiveCompletion: { [weak self] completion in
+                switch completion {
+                case .finished:
+                    print("UserModel stream completed without an error.")
+                case .failure(let error):
+                    print("An error occurred: \(error)")
+                    self?.handleSignInError(error)
+                }
+            }, receiveValue: { [weak self] userModel in
                 if let userModel = userModel {
                     print("User signed in: \(userModel)")
                     self?.navigateToChannelListViewController()
-                } else {
-                    print("No userModel found")
-                }
-            }
+                }})
             .store(in: &cancellables)
     }
+    
+    private func handleSignInError(_ error: SignInError) {
+        DispatchQueue.main.async { [weak self] in
+            switch error {
+            case .userNotFound:
+                print("No user found. Please check your credentials and try again.")
+            case .serverError(let message):
+                print("Server error: \(message)")
+            case .unknownError:
+                print( "An unknown error occurred.")
+            }
+        }
+    }
+    
+    
+    //    private func subscribeToUserModelPublisher() {
+    //        // Subscribe to the userModelPublisher
+    //        viewModel.userModelPublisher
+    //            .receive(on: DispatchQueue.main)
+    //            .sink { [weak self] userModel in
+    //                if let userModel = userModel {
+    //                    print("User signed in: \(userModel)")
+    //
+    //                    self?.navigateToChannelListViewController()
+    //                } else {
+    //                    print("No userModel found")
+    //                }
+    //            }
+    //            .store(in: &cancellables)
+    //    }
 }
 
 
