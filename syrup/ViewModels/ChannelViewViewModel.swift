@@ -5,34 +5,37 @@ protocol ChannelViewViewModelDelegate: AnyObject {
 }
 
 final class ChannelViewViewModel {
-    private var aiServce: AIServiceable
-    var messages: [MessageModel] = [MessageModel]()
+    private var aiService: AIServiceable
+    var messages: [MessageModel] {
+        return aiService.messages
+    }
     weak var delegate: ChannelViewViewModelDelegate?
     
-    init() {
-        self.aiServce = GeminiAIRepository()
+    init(_ channelID: String) {
+        aiService = AIServiceFactory.createAIRepository(for: .geminiAI, channelID)
+        aiService.delegate = self
     }
     
     
-    func sendMessage(_ message: String) {
+    func sendMessage(_ message: String, _ channelID: String) {
         print("send message vm")
-        aiServce.sendMessage(message)
+        aiService.sendMessage(message, channelID)
     }
     
-    func getMessages() {
-        print("get message vm")
-        aiServce.getMessages()
+    func getMessages(_ channelID: String) {
+        print("get messages vm")
+        Task {
+            do {
+                try await aiService.getMessages(channelID)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 
-extension ChannelViewViewModel: AIRepositoryDelegate {
-    func didSendMessageSuccessfully() {
-        //메세지 성공 처리
-        self.delegate?.didUpdateData(self)
-    }
-    
-    func didReceiveMessages() {
-        //메세지 페칭 처리
-        self.delegate?.didUpdateData(self)
+extension ChannelViewViewModel: AIServiceDelegate {
+    func didMessageListUpdate(_ service: AIServiceable) {
+        delegate?.didUpdateData(self)
     }
 }

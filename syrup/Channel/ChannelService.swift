@@ -31,6 +31,12 @@ final class ChannelService: ChannelServiceable {
         FirestoreRepository.shared.listenForChannelChanges(userID: currentUser!.uid)
     }
     
+    deinit {
+        //TODO: Channel 리스너 여러 Mutiple Listener 지원
+        //Combine을 활용하면 더 쉬움 (Life time 관리가 쉬워짐)
+        FirestoreRepository.shared.removeChannelListener()
+    }
+    
     func deleteChannel(at channelID: String) async throws {
         try await FirestoreRepository.shared.deleteChannel(channelID: channelID)
     }

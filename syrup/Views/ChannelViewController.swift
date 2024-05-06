@@ -1,8 +1,8 @@
 import UIKit
 
 class ChannelViewController: UIViewController {
-    private let viewModel = ChannelViewViewModel()
-    var channel: ChannelModel?
+    private var viewModel: ChannelViewViewModel
+    var channel: ChannelModel
     lazy private var inputField: UITextView = {
         let textView = UITextView()
         
@@ -49,26 +49,40 @@ class ChannelViewController: UIViewController {
 //        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
         return button
     }()
-
+    
+    init(channel: ChannelModel) {
+         self.channel = channel
+        self.viewModel = ChannelViewViewModel(channel.channelID)
+         super.init(nibName: nil, bundle: nil)
+     }
+    
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Detail Channel View")
+        print("채널입니다", self.channel)
+        viewModel.delegate = self
         view.backgroundColor = .white
         configureTableView()
+        viewModel.getMessages(channel.channelID)
     }
     
     private func configureTableView() {
-        view.addSubview(tablewView)
+        view.addSubview(tableView)
         view.addSubview(inputField)
         view.addSubview(sendButton)
         
         sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
-            tablewView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
-            tablewView.bottomAnchor.constraint(equalTo: inputField.topAnchor),
-            tablewView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            tablewView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            tableView.bottomAnchor.constraint(equalTo: inputField.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             
             inputField.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -12),
             inputField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -87,13 +101,12 @@ class ChannelViewController: UIViewController {
     }
     
     @objc private func sendButtonTapped() {
-        let message = inputField.text
-        
-        guard let message = message else {
-            print("No messages typed")
+        guard let message = inputField.text, !message.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            print("No message typed")
             return
         }
-        viewModel.sendMessage(message)
+        viewModel.sendMessage(message, channel.channelID)
+        inputField.text = ""
     }
 }
 
@@ -112,16 +125,16 @@ extension ChannelViewController: UITextViewDelegate {
 //MARK: TableView Delegates
 extension ChannelViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        return viewModel.messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "helo"
+        cell.textLabel?.text = "hello"
         return cell
     }
 }
-
+//한 곳에서 일관적으로 처리하기 UI 업데이트 (main queue) 콜백
 extension ChannelViewController: ChannelViewViewModelDelegate {
     func didUpdateData(_ viewModel: ChannelViewViewModel) {
         DispatchQueue.main.async { [weak self] in

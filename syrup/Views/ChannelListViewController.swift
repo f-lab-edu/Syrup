@@ -49,7 +49,10 @@ class ChannelListViewController: UIViewController, ChannelErrorDelegate {
     private func showAlert(withMessage message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
+//        DispatchQueue.main.async { [weak self] _ in
+//            present(alert, animated: true)
+//        }
+
     }
     
     
@@ -108,9 +111,9 @@ extension ChannelListViewController: UITableViewDelegate, UITableViewDataSource 
         print("didSelectRowAt", indexPath.row.description)
         print(viewModel.channelList[indexPath.row])
         
-        let detailVC = ChannelViewController()
+        let channel = viewModel.channelList[indexPath.row]
+        let detailVC = ChannelViewController(channel: channel)
         detailVC.hidesBottomBarWhenPushed = true
-        detailVC.channel = viewModel.channelList[indexPath.row]
         navigationController?.pushViewController(detailVC, animated: true)
     }
     

@@ -23,6 +23,7 @@ final class ChannelListViewViewModel {
         channelService.delegate = self
     }
     
+    
     func createChannel(aiServiceType: AIServiceType) async {
          do {
             try await channelService.createChannel(aiServiceType: .geminiAI)

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04854A662BE8B73C00A2CBE6 /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = 04854A652BE8B73C00A2CBE6 /* GoogleGenerativeAI */; };
+		04854A682BE8BF8200A2CBE6 /* CustomMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04854A672BE8BF8200A2CBE6 /* CustomMessageCell.swift */; };
 		04DD83542BC280B7004C26C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83532BC280B7004C26C6 /* AppDelegate.swift */; };
 		04DD83562BC280B7004C26C6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83552BC280B7004C26C6 /* SceneDelegate.swift */; };
 		04DD835D2BC280B8004C26C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04DD835C2BC280B8004C26C6 /* Assets.xcassets */; };
@@ -36,12 +38,14 @@
 		04DD83A82BD501EB004C26C6 /* CustomChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83A72BD501EB004C26C6 /* CustomChannelCell.swift */; };
 		04DD83AA2BD7C9E9004C26C6 /* ChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83A92BD7C9E9004C26C6 /* ChannelViewController.swift */; };
 		04DD83AD2BD900EE004C26C6 /* ChannelViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83AC2BD900EE004C26C6 /* ChannelViewViewModel.swift */; };
-		04DD83B02BDF4AB5004C26C6 /* GeminiAIRepostiory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83AF2BDF4AB5004C26C6 /* GeminiAIRepostiory.swift */; };
+		04DD83B02BDF4AB5004C26C6 /* GeminiAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83AF2BDF4AB5004C26C6 /* GeminiAIService.swift */; };
 		04DD83B22BDF4C04004C26C6 /* AIServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83B12BDF4C04004C26C6 /* AIServiceFactory.swift */; };
 		04DD83B42BDF94CC004C26C6 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83B32BDF94CC004C26C6 /* MessageModel.swift */; };
+		04DD83B62BE8688F004C26C6 /* ApiKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD83B52BE8688F004C26C6 /* ApiKeys.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04854A672BE8BF8200A2CBE6 /* CustomMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMessageCell.swift; sourceTree = "<group>"; };
 		04DD83502BC280B7004C26C6 /* syrup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = syrup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04DD83532BC280B7004C26C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04DD83552BC280B7004C26C6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -70,9 +74,10 @@
 		04DD83A72BD501EB004C26C6 /* CustomChannelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomChannelCell.swift; sourceTree = "<group>"; };
 		04DD83A92BD7C9E9004C26C6 /* ChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelViewController.swift; sourceTree = "<group>"; };
 		04DD83AC2BD900EE004C26C6 /* ChannelViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelViewViewModel.swift; sourceTree = "<group>"; };
-		04DD83AF2BDF4AB5004C26C6 /* GeminiAIRepostiory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiAIRepostiory.swift; sourceTree = "<group>"; };
+		04DD83AF2BDF4AB5004C26C6 /* GeminiAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiAIService.swift; sourceTree = "<group>"; };
 		04DD83B12BDF4C04004C26C6 /* AIServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIServiceFactory.swift; sourceTree = "<group>"; };
 		04DD83B32BDF94CC004C26C6 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
+		04DD83B52BE8688F004C26C6 /* ApiKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeys.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04854A662BE8B73C00A2CBE6 /* GoogleGenerativeAI in Frameworks */,
 				04DD836C2BC293EE004C26C6 /* FirebaseAuth in Frameworks */,
 				04DD836E2BC293EE004C26C6 /* FirebaseFirestore in Frameworks */,
 				04DD83712BC29413004C26C6 /* GoogleSignIn in Frameworks */,
@@ -137,6 +143,7 @@
 				04DD83A52BCC1B76004C26C6 /* SettingsViewController.swift */,
 				04DD83A72BD501EB004C26C6 /* CustomChannelCell.swift */,
 				04DD83A92BD7C9E9004C26C6 /* ChannelViewController.swift */,
+				04854A672BE8BF8200A2CBE6 /* CustomMessageCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -164,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				04DD838B2BC29CCB004C26C6 /* SyrupConfigurator.swift */,
+				04DD83B52BE8688F004C26C6 /* ApiKeys.swift */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -217,7 +225,7 @@
 		04DD83AE2BDF4A95004C26C6 /* AI */ = {
 			isa = PBXGroup;
 			children = (
-				04DD83AF2BDF4AB5004C26C6 /* GeminiAIRepostiory.swift */,
+				04DD83AF2BDF4AB5004C26C6 /* GeminiAIService.swift */,
 				04DD83B12BDF4C04004C26C6 /* AIServiceFactory.swift */,
 			);
 			path = AI;
@@ -244,6 +252,7 @@
 				04DD836D2BC293EE004C26C6 /* FirebaseFirestore */,
 				04DD83702BC29413004C26C6 /* GoogleSignIn */,
 				04DD83722BC29413004C26C6 /* GoogleSignInSwift */,
+				04854A652BE8B73C00A2CBE6 /* GoogleGenerativeAI */,
 			);
 			productName = syrup;
 			productReference = 04DD83502BC280B7004C26C6 /* syrup.app */;
@@ -276,6 +285,7 @@
 			packageReferences = (
 				04DD836A2BC293ED004C26C6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				04DD836F2BC29413004C26C6 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				04854A642BE8B73C00A2CBE6 /* XCRemoteSwiftPackageReference "generative-ai-swift" */,
 			);
 			productRefGroup = 04DD83512BC280B7004C26C6 /* Products */;
 			projectDirPath = "";
@@ -310,8 +320,10 @@
 				04DD83A42BCC1696004C26C6 /* TabBarController.swift in Sources */,
 				04DD83B22BDF4C04004C26C6 /* AIServiceFactory.swift in Sources */,
 				04DD83962BC29D3E004C26C6 /* ChannelListViewController.swift in Sources */,
-				04DD83B02BDF4AB5004C26C6 /* GeminiAIRepostiory.swift in Sources */,
+				04DD83B02BDF4AB5004C26C6 /* GeminiAIService.swift in Sources */,
 				04DD83A62BCC1B76004C26C6 /* SettingsViewController.swift in Sources */,
+				04DD83B62BE8688F004C26C6 /* ApiKeys.swift in Sources */,
+				04854A682BE8BF8200A2CBE6 /* CustomMessageCell.swift in Sources */,
 				04DD83A82BD501EB004C26C6 /* CustomChannelCell.swift in Sources */,
 				04DD838C2BC29CCB004C26C6 /* SyrupConfigurator.swift in Sources */,
 				04DD83A02BC3D7C6004C26C6 /* ChannelListViewViewModel.swift in Sources */,
@@ -548,6 +560,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		04854A642BE8B73C00A2CBE6 /* XCRemoteSwiftPackageReference "generative-ai-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/generative-ai-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.2;
+			};
+		};
 		04DD836A2BC293ED004C26C6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -567,6 +587,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		04854A652BE8B73C00A2CBE6 /* GoogleGenerativeAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04854A642BE8B73C00A2CBE6 /* XCRemoteSwiftPackageReference "generative-ai-swift" */;
+			productName = GoogleGenerativeAI;
+		};
 		04DD836B2BC293EE004C26C6 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 04DD836A2BC293ED004C26C6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
