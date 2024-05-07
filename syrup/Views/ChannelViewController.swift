@@ -29,9 +29,10 @@ class ChannelViewController: UIViewController {
     lazy private var tableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        table.register(CustomMessageCell.self, forCellReuseIdentifier: CustomMessageCell.identifier)
         table.delegate = self
         table.dataSource = self
+        table.separatorStyle = .none
         
         return table
     }()
@@ -43,10 +44,7 @@ class ChannelViewController: UIViewController {
         let buttonImage = UIImage(systemName: "paperplane.fill")
         button.setImage(buttonImage, for: .normal)
         button.imageView?.contentMode = .scaleToFill
-        
         button.backgroundColor = .black
-//        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 6)
-//        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
         return button
     }()
     
@@ -80,7 +78,7 @@ class ChannelViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
-            tableView.bottomAnchor.constraint(equalTo: inputField.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: inputField.topAnchor, constant: -5),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             
@@ -129,9 +127,12 @@ extension ChannelViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "hello"
+        let cell = tableView.dequeueReusableCell(withIdentifier: CustomMessageCell.identifier, for: indexPath)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
     }
 }
 //한 곳에서 일관적으로 처리하기 UI 업데이트 (main queue) 콜백

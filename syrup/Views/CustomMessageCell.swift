@@ -6,59 +6,81 @@ import UIKit
 class CustomMessageCell: UITableViewCell {
     
     static let identifier = "CustomMessageCell"
+    var textLeading: NSLayoutConstraint!
+    var textTrailing: NSLayoutConstraint!
+    var imageLeading: NSLayoutConstraint!
+    var imageTrailing: NSLayoutConstraint!
     
-    private let channelImageView: UIImageView = {
+    let profileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(systemName: "questionmark")
-        imageView.tintColor = .tintColor
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.image = UIImage(systemName: "person")
         return imageView
     }()
     
-    private let channelLabel: UILabel = {
+    let bubbleView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 10
+        view.backgroundColor = .systemBlue
+        
+        return view
+        
+    }()
+    
+    let chatTextLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .label
-        label.textAlignment = .left
-        label.font = .systemFont(ofSize: 24, weight: .medium)
-        label.text = "Error"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.text = "Hello World jfhsjdfhsjdfsjdf jsdhfkjsdhfkjsd fsjdfhiwjefnjkwe fjsd dfjshdfkjwhejkfhkjdfhsdfhls fhsjkdfhksjdfh"
+        
         return label
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.configureUI()
+        configureUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configure(with image: UIImage, and label: String) {
-        self.channelImageView.image = image
-        self.channelLabel.text = label
-    }
-    
     private func configureUI() {
-        self.contentView.addSubview(channelImageView)
-        self.contentView.addSubview(channelLabel)
-        
-        channelImageView.translatesAutoresizingMaskIntoConstraints = false
-        channelLabel.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(profileImageView)
+        addSubview(bubbleView)
+        addSubview(chatTextLabel)
         
         NSLayoutConstraint.activate([
-            channelImageView.topAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.topAnchor),
-            channelImageView.bottomAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.bottomAnchor),
-            channelImageView.leadingAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leadingAnchor),
+            profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+            profileImageView.heightAnchor.constraint(equalToConstant: 32),
+            profileImageView.widthAnchor.constraint(equalToConstant: 32),
             
-            channelImageView.heightAnchor.constraint(equalToConstant: 90),
-            channelImageView.widthAnchor.constraint(equalToConstant: 90),
+            chatTextLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            chatTextLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            chatTextLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 250),
             
-            
-            channelLabel.leadingAnchor.constraint(equalTo: self.channelImageView.trailingAnchor, constant: 16),
-            channelLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -12),
-            channelLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            channelLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+            bubbleView.topAnchor.constraint(equalTo: chatTextLabel.topAnchor, constant: -8),
+            bubbleView.leadingAnchor.constraint(equalTo: chatTextLabel.leadingAnchor, constant: -8),
+            bubbleView.trailingAnchor.constraint(equalTo: chatTextLabel.trailingAnchor, constant: 8),
+            bubbleView.bottomAnchor.constraint(equalTo: chatTextLabel.bottomAnchor, constant: 8),
             
         ])
+        
+        imageLeading = profileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8)
+        imageTrailing = profileImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
+        
+        textLeading = chatTextLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 8)
+        textTrailing = chatTextLabel.trailingAnchor.constraint(equalTo: profileImageView.leadingAnchor, constant: -8)
+        
+        imageTrailing.isActive = true
+        textTrailing.isActive = true
     }
+    
+    func configureForMessage(message: String, isUser: Bool) {
+        
+    }
+    
 }
