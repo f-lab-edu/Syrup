@@ -7,7 +7,7 @@ class ChannelListViewController: UIViewController, ChannelErrorDelegate {
     
     private let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .systemGreen
+        tableView.backgroundColor = .systemBackground
         tableView.allowsSelection = true
         tableView.register(CustomChannelCell.self, forCellReuseIdentifier: CustomChannelCell.identifier)
         return tableView
@@ -100,6 +100,7 @@ extension ChannelListViewController: UITableViewDelegate, UITableViewDataSource 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomChannelCell.identifier, for: indexPath) as? CustomChannelCell else {
             fatalError("TableView Custom Cell Deque Error")
         }
+        cell.selectionStyle = .none
         let image = UIImage(systemName: "questionmark")
         //Last Chat Message and Image 넣는 곳
         cell.configure(with: image!, and: "hi")
@@ -110,6 +111,7 @@ extension ChannelListViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("didSelectRowAt", indexPath.row.description)
         print(viewModel.channelList[indexPath.row])
+        tableView.deselectRow(at: indexPath, animated: false)
         
         let channel = viewModel.channelList[indexPath.row]
         let detailVC = ChannelViewController(channel: channel)
@@ -122,7 +124,7 @@ extension ChannelListViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-
+        
         Task {
             await viewModel.deleteChannel(at: indexPath.row)
         }

@@ -49,10 +49,10 @@ class ChannelViewController: UIViewController {
     }()
     
     init(channel: ChannelModel) {
-         self.channel = channel
+        self.channel = channel
         self.viewModel = ChannelViewViewModel(channel.channelID)
-         super.init(nibName: nil, bundle: nil)
-     }
+        super.init(nibName: nil, bundle: nil)
+    }
     
     
     required init?(coder: NSCoder) {
@@ -85,11 +85,11 @@ class ChannelViewController: UIViewController {
             inputField.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -12),
             inputField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             inputField.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: -10),
-//            inputField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -60),
+            //            inputField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -60),
             inputField.heightAnchor.constraint(lessThanOrEqualToConstant: 120),
             
             sendButton.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -12),
-//            sendButton.leadingAnchor.constraint(equalTo: inputField.trailingAnchor, constant: 20),
+            //            sendButton.leadingAnchor.constraint(equalTo: inputField.trailingAnchor, constant: 20),
             sendButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             sendButton.centerYAnchor.constraint(equalTo: inputField.centerYAnchor),
             sendButton.widthAnchor.constraint(equalToConstant: 40),
@@ -127,7 +127,18 @@ extension ChannelViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CustomMessageCell.identifier, for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomMessageCell.identifier, for: indexPath) as? CustomMessageCell else {
+            return UITableViewCell()
+        }
+        cell.selectionStyle = .none
+        
+        let index = indexPath.row
+        let message = viewModel.messages[index]
+        if index % 2 == 0 {
+            cell.configureForMessage(message: message.content, isUser: true)
+        } else {
+            cell.configureForMessage(message: message.content, isUser: false)
+        }
         return cell
     }
     
