@@ -2,7 +2,6 @@ import Foundation
 import UIKit
 
 class ChannelListViewController: UIViewController, ChannelErrorDelegate {
-    
     private let viewModel = ChannelListViewViewModel()
     
     private let tableView: UITableView = {

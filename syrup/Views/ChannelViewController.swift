@@ -2,6 +2,7 @@ import UIKit
 
 class ChannelViewController: UIViewController {
     private var viewModel: ChannelViewViewModel
+    
     var channel: ChannelModel
     lazy private var inputField: UITextView = {
         let textView = UITextView()
@@ -11,8 +12,8 @@ class ChannelViewController: UIViewController {
         textView.delegate = self
         textView.autocorrectionType = .no
         textView.autocapitalizationType = .none
-        textView.returnKeyType = .send
-        textView.textContainerInset = UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4)
+        textView.returnKeyType = .default
+        textView.textContainerInset = UIEdgeInsets(top: 7, left: 4, bottom: 2, right: 4)
         
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.lightGray.cgColor
@@ -21,8 +22,6 @@ class ChannelViewController: UIViewController {
         textView.font = UIFont.systemFont(ofSize: 18)
         textView.setContentHuggingPriority(.defaultHigh, for: .vertical)
         textView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        textView.isScrollEnabled = false
-        
         return textView
     }()
     
@@ -67,6 +66,7 @@ class ChannelViewController: UIViewController {
         view.backgroundColor = .white
         configureTableView()
         viewModel.getMessages(channel.channelID)
+        addKeyboardListener()
     }
     
     private func configureTableView() {
@@ -75,7 +75,6 @@ class ChannelViewController: UIViewController {
         view.addSubview(sendButton)
         
         sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
-        
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
             tableView.bottomAnchor.constraint(equalTo: inputField.topAnchor, constant: -5),
@@ -106,6 +105,26 @@ class ChannelViewController: UIViewController {
         viewModel.sendMessage(message, channel.channelID)
         inputField.text = ""
     }
+    
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        print("Keyboard 보인다!!")
+        scrollToBottom()
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        print("키보드 안보인다")
+    }
+    
+    private func scrollToBottom() {
+        let indexPath = IndexPath(row: self.viewModel.messages.count - 1, section: 0)
+        self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+    }
+    
+    private func addKeyboardListener() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+          NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
 }
 
 //MARK: TextField Delegate
@@ -113,6 +132,15 @@ extension ChannelViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         print("ViewDidChange")
+        let size = CGSize(width: textView.frame.width, height: .infinity)
+        let estimatedSize = textView.sizeThatFits(size)
+        
+        // Re-enable or disable scrolling based on the height
+        textView.isScrollEnabled = true
+        
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -130,6 +158,7 @@ extension ChannelViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomMessageCell.identifier, for: indexPath) as? CustomMessageCell else {
             return UITableViewCell()
         }
+//        cell.prepareForReuse()
         cell.selectionStyle = .none
         
         let index = indexPath.row
