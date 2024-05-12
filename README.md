@@ -22,6 +22,8 @@
 ## 앱 사진
 <img width="394" alt="image" src="https://github.com/f-lab-edu/Syrup/assets/84483515/1e087196-0465-41bf-a4ff-78dde21fd467">
 
+<img width="423" alt="image" src="https://github.com/f-lab-edu/Syrup/assets/84483515/c1ad7c86-25ea-4360-a739-a78159549e94">
+
 
 ## 진행하면서 배운 것들 (troubleshooting)
 - Multi-layer 구조에서의 Data Flow 관리 (단방향 데이터 흐름 (Delegate 패턴), Combine) (Link)
