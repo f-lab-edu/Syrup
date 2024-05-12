@@ -23,7 +23,8 @@
 
 
 ## 진행하면서 배운 것들 (troubleshooting)
-- Multi-layer 구조에서의 Data Flow 관리 (단방향 데이터 흐름 (Delegate 패턴), Combine)
-- 소셜 로그인: 구글 및 애플 로그인을 통해 소셜 로그인 인증 과정 이해.
-- MVVM 디자인 패턴: MVVM 패턴을 통해 
-- 팩토리 디자인 패턴: 객체 생성을 보다 유연하게 처리하는 방법을 배웠습니다.
+- Multi-layer 구조에서의 Data Flow 관리 (단방향 데이터 흐름 (Delegate 패턴), Combine) (Link)
+- 소셜 로그인: 구글 및 애플 로그인을 통해 소셜 로그인 인증 과정 이해. (Link)
+- MVVM 디자인 패턴: MVVM 디자인 패턴을 통해 관심사 분리 (View, ViewModel, Model), data binding, Reactivity에 대해서 배움. (Link)
+- 팩토리 디자인 패턴: 객체 생성을 보다 유연하게 처리하는 방법을 배움. (Link)
+- Swift Concurrency를 활용해 더 가독성이 좋은 비동기 처리에 대해 배움. (Link)
