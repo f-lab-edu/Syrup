@@ -5,6 +5,13 @@
 - AI 챗 서비스는 사용자가 다양한 LLM 서비스와 채팅 메시지를 통해 메시지를 주고받을 수 있는 앱입니다.
 - 현재 GeminiAI를 지원하며, 추후 ChatGPT, Claude 추가 예정 입니다.
 
+<img width="833" alt="image" src="https://github.com/f-lab-edu/Syrup/assets/84483515/38dd0799-0281-4798-942f-ae62f309eaf1">
+<img width="872" alt="image" src="https://github.com/f-lab-edu/Syrup/assets/84483515/89357868-5f47-4f0e-b7b0-91d6342029ae">
+<img width="730" alt="image" src="https://github.com/f-lab-edu/Syrup/assets/84483515/bd110076-d238-483a-9554-6b570ba5b8c8">
+
+
+
+
 ## 기술 스택
 - Swift Concurrency Async/Await
 - MVVM Design pattern
