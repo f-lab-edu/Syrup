@@ -2,12 +2,11 @@ import Foundation
 import UIKit
 
 class ChannelListViewController: UIViewController, ChannelErrorDelegate {
-    
     private let viewModel = ChannelListViewViewModel()
     
     private let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .systemGreen
+        tableView.backgroundColor = .systemBackground
         tableView.allowsSelection = true
         tableView.register(CustomChannelCell.self, forCellReuseIdentifier: CustomChannelCell.identifier)
         return tableView
@@ -49,7 +48,10 @@ class ChannelListViewController: UIViewController, ChannelErrorDelegate {
     private func showAlert(withMessage message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
+//        DispatchQueue.main.async { [weak self] _ in
+//            present(alert, animated: true)
+//        }
+
     }
     
     
@@ -97,6 +99,7 @@ extension ChannelListViewController: UITableViewDelegate, UITableViewDataSource 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomChannelCell.identifier, for: indexPath) as? CustomChannelCell else {
             fatalError("TableView Custom Cell Deque Error")
         }
+        cell.selectionStyle = .none
         let image = UIImage(systemName: "questionmark")
         //Last Chat Message and Image 넣는 곳
         cell.configure(with: image!, and: "hi")
@@ -107,10 +110,11 @@ extension ChannelListViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("didSelectRowAt", indexPath.row.description)
         print(viewModel.channelList[indexPath.row])
+        tableView.deselectRow(at: indexPath, animated: false)
         
-        let detailVC = DetailChannelViewController()
+        let channel = viewModel.channelList[indexPath.row]
+        let detailVC = ChannelViewController(channel: channel)
         detailVC.hidesBottomBarWhenPushed = true
-        detailVC.channel = viewModel.channelList[indexPath.row]
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
@@ -119,7 +123,7 @@ extension ChannelListViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-
+        
         Task {
             await viewModel.deleteChannel(at: indexPath.row)
         }
